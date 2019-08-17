@@ -48,50 +48,23 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: ListView.builder(
-          itemBuilder: (context, position) {
-            return Card(
+          child: ListView.builder(
+        itemBuilder: (context, position) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/second');
+            },
+            child: Card(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(androidVersionNames[position]),
               ),
-            );
-          },
-          itemCount: androidVersionNames.length,
-        )
-//            Container(
-//              height: 50,
-//              color: Colors.amber[600],
-//              child: const Center(child: Text('Entry A')),
-//            ),
-//            Container(
-//              height: 50,
-//              color: Colors.amber[500],
-//              child: const Center(child: Text('Entry B')),
-//            ),
-//            Container(
-//              height: 50,
-//              color: Colors.amber[100],
-//              child: const Center(child: Text('Entry C')),
-//            ),
-        ,
-        // Column is also layout widget. It takes a list of children and
-        // arranges them vertically. By default, it sizes itself to fit its
-        // children horizontally, and tries to be as tall as its parent.
-        //
-        // Invoke "debug painting" (press "p" in the console, choose the
-        // "Toggle Debug Paint" action from the Flutter Inspector in Android
-        // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-        // to see the wireframe for each widget.
-        //
-        // Column has various properties to control how it sizes itself and
-        // how it positions its children. Here we use mainAxisAlignment to
-        // center the children vertically; the main axis here is the vertical
-        // axis because Columns are vertical (the cross axis would be
-        // horizontal).
-      ),
+            ),
+          );
+        },
+        itemCount: androidVersionNames.length,
+      )),
       floatingActionButton: FloatingActionButton(
-
         onPressed: () {
           Navigator.pushNamed(context, '/second');
         },

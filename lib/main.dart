@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'edit.dart';
+import 'package:flutter/foundation.dart';
+import 'dart:developer' as developer;
 
 void main() => runApp(MyApp());
 
@@ -22,83 +24,92 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatelessWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     var androidVersionNames = ['a', 'b', 'c'];
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('todo list'),
       ),
       body: Center(
-        child: ListView.builder(
-          itemBuilder: (context, position) {
-            return Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(androidVersionNames[position]),
-              ),
-            );
-          },
-          itemCount: androidVersionNames.length,
-        )
-//            Container(
-//              height: 50,
-//              color: Colors.amber[600],
-//              child: const Center(child: Text('Entry A')),
-//            ),
-//            Container(
-//              height: 50,
-//              color: Colors.amber[500],
-//              child: const Center(child: Text('Entry B')),
-//            ),
-//            Container(
-//              height: 50,
-//              color: Colors.amber[100],
-//              child: const Center(child: Text('Entry C')),
-//            ),
-        ,
-        // Column is also layout widget. It takes a list of children and
-        // arranges them vertically. By default, it sizes itself to fit its
-        // children horizontally, and tries to be as tall as its parent.
-        //
-        // Invoke "debug painting" (press "p" in the console, choose the
-        // "Toggle Debug Paint" action from the Flutter Inspector in Android
-        // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-        // to see the wireframe for each widget.
-        //
-        // Column has various properties to control how it sizes itself and
-        // how it positions its children. Here we use mainAxisAlignment to
-        // center the children vertically; the main axis here is the vertical
-        // axis because Columns are vertical (the cross axis would be
-        // horizontal).
-      ),
+          child: ListView.builder(
+        itemBuilder: (context, position) {
+          return Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(androidVersionNames[position]),
+            ),
+          );
+        },
+        itemCount: androidVersionNames.length,
+      )),
       floatingActionButton: FloatingActionButton(
-
         onPressed: () {
-          Navigator.pushNamed(context, '/second');
+          _navigateAndDisplaySelection(context);
+//          Navigator.pushNamed(context, '/second');
         },
 //        tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
     );
-    // This trailing comma makes auto-formatting nicer for build methods.
   }
+}
+
+int _counter = 0;
+bool state = false;
+var result;
+
+_navigateAndDisplaySelection(BuildContext context) async {
+  // Navigator.push returns a Future that completes after calling
+  // Navigator.pop on the Selection Screen.
+  result = await Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => EditPage()),
+  );
+
+  // After the Selection Screen returns a result, hide any previous snackbars
+  // and show the new result.
+  print('this is me');
+  debugPrint('this is me');
+
+  developer.log('log me', name: 'my.app.category');
+
+  Scaffold.of(context)
+    ..removeCurrentSnackBar()
+    ..showSnackBar(SnackBar(content: Text("$result")));
+}
+
+@override
+Widget build(BuildContext context) {
+  var androidVersionNames = ['a', 'b', 'c'];
+  return Scaffold(
+    appBar: AppBar(
+      title: Text('todo list'),
+    ),
+    body: Center(
+        child: ListView.builder(
+      itemBuilder: (context, position) {
+        return Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(androidVersionNames[position]),
+          ),
+        );
+      },
+      itemCount: androidVersionNames.length,
+    )),
+    floatingActionButton: FloatingActionButton(
+      onPressed: () {
+        _navigateAndDisplaySelection(context);
+//          Navigator.pushNamed(context, '/second');
+      },
+//        tooltip: 'Increment',
+      child: Icon(Icons.add),
+    ),
+  );
 }

@@ -37,7 +37,9 @@ class _EditPageState extends State<EditPage> {
               ),
               RaisedButton(
                 color: Colors.blue,
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.pop(context,'hey!!');
+                },
                 child: Text('確認'),
               )
             ],

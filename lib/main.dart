@@ -52,11 +52,12 @@ class _MyHomePageState extends State<MyHomePage> {
         itemBuilder: (context, position) {
           return GestureDetector(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EditPage(todos: androidVersionNames[position],),
-                  ));
+              navigateToSubPage(context, androidVersionNames[position]);
+//              Navigator.push(
+//                  context,
+//                  MaterialPageRoute(
+//                    builder: (context) => EditPage(todos: androidVersionNames[position],),
+//                  ));
             },
             child: Card(
               child: Padding(
@@ -81,6 +82,21 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
     // This trailing comma makes auto-formatting nicer for build methods.
+  }
+
+  Future navigateToSubPage(context, todos) async {
+    String message = await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => EditPage(
+                  todos: todos,
+                )));
+    Scaffold.of(context).showSnackBar(
+      new SnackBar(
+        content: new Text(message),
+      ),
+    );
+    print(message);
   }
 }
 

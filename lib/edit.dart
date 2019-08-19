@@ -9,42 +9,53 @@ class EditPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<bool> _onWillPop() {
+      Navigator.pop(context,'this is it');
+      return new Future.value(false);
+    }
     // TODO: implement build
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(' To-Do $todos'),
-      ),
-      body: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              height: 200,
-              child: TextFormField(
-                initialValue: todos,
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(' To-Do $todos'),
+        ),
+        body: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 200,
+                child: TextFormField(
+                  initialValue: todos,
+                ),
               ),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              RaisedButton(
-                color: Colors.grey,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                RaisedButton(
+                  color: Colors.grey,
 //                color: Colors.red,
-                onPressed: () {},
-                child: Text('捨棄'),
-              ),
-              RaisedButton(
-                color: Colors.blue,
-                onPressed: () {},
-                child: Text('確認'),
-              )
-            ],
-          )
-        ],
+                  onPressed: () {},
+                  child: Text('捨棄'),
+                ),
+                RaisedButton(
+                  color: Colors.blue,
+                  onPressed: () {},
+                  child: Text('確認'),
+                )
+              ],
+            )
+          ],
+        ),
       ),
+
     );
+
   }
+
+
 }
 
 //class _EditPageState extends State<EditPage> {

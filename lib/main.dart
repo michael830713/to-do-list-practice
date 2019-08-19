@@ -40,9 +40,30 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  var androidVersionNames = ['Nougat', 'Oreo', 'Pie'];
+
   @override
   Widget build(BuildContext context) {
-    var androidVersionNames = ['a', 'b', 'c'];
+    Future navigateToSubPage(todos, position) async {
+      String message = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => EditPage(
+            todos: todos,
+          ),
+        ),
+      );
+      setState(() {
+        androidVersionNames[position] = message;
+      });
+      Scaffold.of(context).showSnackBar(
+        new SnackBar(
+          content: new Text(message),
+        ),
+      );
+      print(message);
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -52,12 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
         itemBuilder: (context, position) {
           return GestureDetector(
             onTap: () {
-              navigateToSubPage(context, androidVersionNames[position]);
-//              Navigator.push(
-//                  context,
-//                  MaterialPageRoute(
-//                    builder: (context) => EditPage(todos: androidVersionNames[position],),
-//                  ));
+              navigateToSubPage(androidVersionNames[position], position);
             },
             child: Card(
               child: Padding(
@@ -72,31 +88,17 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => EditPage(),
-              ));
+            context,
+            MaterialPageRoute(
+              builder: (context) => EditPage(),
+            ),
+          );
         },
 //        tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
     );
     // This trailing comma makes auto-formatting nicer for build methods.
-  }
-
-  Future navigateToSubPage(context, todos) async {
-    String message = await Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => EditPage(
-                  todos: todos,
-                )));
-    Scaffold.of(context).showSnackBar(
-      new SnackBar(
-        content: new Text(message),
-      ),
-    );
-    print(message);
   }
 }
 
